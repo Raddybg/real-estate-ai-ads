@@ -59,6 +59,7 @@
   <textarea id="features" placeholder="напр. светъл, близо до Лидл, до детска градина, южен, след ремонт"></textarea>
 
   <button onclick="generateAd()">Генерирай обява</button>
+  <button onclick="generateAIAd()">Генерирай обява с AI</button>
 
   <h2>Генерирана обява</h2>
   <div id="output"></div>
@@ -74,6 +75,41 @@
       const adText = `Предлагаме ${propertyType} в квартал ${location} с площ от ${area} кв.м, разположен на етаж ${floor}. ${propertyType} е ${features}. Отличен избор за ваш нов дом или инвестиция!`;
 
       document.getElementById("output").textContent = adText;
+    }
+
+     async function generateAIAd() {
+      const location = document.getElementById("location").value;
+      const propertyType = document.getElementById("propertyType").value;
+      const area = document.getElementById("area").value;
+      const floor = document.getElementById("floor").value;
+      const features = document.getElementById("features").value;
+
+      const prompt = `Създай атрактивна обява за ${propertyType}, намиращ се в квартал ${location}, с площ от ${area} кв.м, етаж: ${floor}. Особености: ${features}.`;
+
+      const apiKey = "YOUR_OPENAI_API_KEY"; // Замени с твоя реален ключ
+
+      try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: "gpt-4",
+            messages: [{ role: "user", content: prompt }],
+            max_tokens: 250,
+            temperature: 0.7
+          })
+        });
+
+        const data = await response.json();
+        const aiText = data.choices[0].message.content;
+        document.getElementById("output").textContent = aiText;
+      } catch (error) {
+        document.getElementById("output").textContent = "Възникна грешка при генериране на обявата.";
+        console.error(error);
+      }
     }
   </script>
 </body>
