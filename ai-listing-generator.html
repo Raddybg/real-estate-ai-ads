@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Генератор на обяви за имоти</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f8f8f8;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    #output {
+      background-color: #fff;
+      padding: 15px;
+      border: 1px solid #ddd;
+      min-height: 100px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Генериране на обява за имот</h1>
+
+  <label>Локация</label>
+  <input type="text" id="location" placeholder="напр. Дружба 2" />
+
+  <label>Тип имот</label>
+  <select id="propertyType">
+    <option value="Двустаен апартамент">Двустаен апартамент</option>
+    <option value="Тристаен апартамент">Тристаен апартамент</option>
+    <option value="Мезонет">Мезонет</option>
+    <option value="Гарсониера">Гарсониера</option>
+  </select>
+
+  <label>Площ (кв.м)</label>
+  <input type="number" id="area" />
+
+  <label>Етаж</label>
+  <input type="text" id="floor" placeholder="напр. 7 от 8" />
+
+  <label>Особености</label>
+  <textarea id="features" placeholder="напр. светъл, близо до Лидл, до детска градина, южен, след ремонт"></textarea>
+
+  <button onclick="generateAd()">Генерирай обява</button>
+
+  <h2>Генерирана обява</h2>
+  <div id="output"></div>
+
+  <script>
+    function generateAd() {
+      const location = document.getElementById("location").value;
+      const propertyType = document.getElementById("propertyType").value;
+      const area = document.getElementById("area").value;
+      const floor = document.getElementById("floor").value;
+      const features = document.getElementById("features").value;
+
+      const adText = `Предлагаме ${propertyType} в квартал ${location} с площ от ${area} кв.м, разположен на етаж ${floor}. ${propertyType} е ${features}. Отличен избор за ваш нов дом или инвестиция!`;
+
+      document.getElementById("output").textContent = adText;
+    }
+  </script>
+</body>
+</html>
